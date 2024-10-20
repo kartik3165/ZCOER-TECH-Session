@@ -1,6 +1,6 @@
-## GitHub repo to add your code
+# GitHub repo to add your code
 
-* Steps:
+### Steps:
   
 1. Fork the repo.
 2. Clone your repo created by the fork.
