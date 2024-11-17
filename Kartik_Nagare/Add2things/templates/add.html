@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Inputs and a Button</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Full-screen background */
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff6f61, #ffb347); /* Colorful gradient background */
+            color: #fff;
+        }
+
+        /* Container for the form */
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Light background for form */
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        /* Form Title */
+        h1 {
+            font-size: 24px;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        /* Input fields */
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        /* Submit button */
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Result text */
+        h3 {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+            font-weight: normal;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .form-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            input[type="text"], input[type="submit"] {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form action="addnumber">
+            <h1>Addition of two Number</h1>
+            <input type="text" name="input1" placeholder="Enter first value" required><br><br>
+            <input type="text" name="input2" placeholder="Enter second value" required><br><br>
+            <input type="submit" value="Add Numbers">
+            <h3> Result  </h3>
+            <h1> {{add_results}} </h1>
+        </form>
+    </div>
+</body>
+</html>
