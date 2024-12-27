@@ -63,3 +63,7 @@ def log(request):
     logout(request)
     return redirect('/')
 
+def single_product(request , id):
+    product_data = product.objects.get(id = id)
+    return render(request , 'single_product.html' , {'Product' : product_data })
+

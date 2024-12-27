@@ -1,0 +1,185 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,700&display=swap" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}"/>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-header {
+            margin-bottom: 2rem;
+        }
+
+        .product-header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            position: relative;
+            display: inline-block;
+        }
+
+        .product-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: #4CAF50;
+        }
+
+        .product-container {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .new-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: #333;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        .product-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .product-features {
+            list-style: none;
+        }
+
+        .product-features li {
+            margin-bottom: 0.5rem;
+            color: #444;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .product-features li::before {
+            content: '•';
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .buy-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+        }
+
+        .buy-button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="product-header" style="margin-top: 50px;">
+            <h1>Product Details</h1>
+        </div>
+        
+        <div class="product-container">
+            <div class="product-image">
+                <img src="{{ Product.img.url }}" alt="">
+                {% if Product.offer == True %}
+                    <div class="new">
+                    <h5>
+                        <span class="new-badge">New</span>
+                    </h5>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="product-details">
+                <h2 class="product-title">{{ Product.name }}</h2>
+                <p class="product-price">{{ Product.price}}</p>
+                
+                <div class="product-description">
+                    <p>{{ Product.description }}</p>
+                </div>
+                
+                <ul class="product-features">
+                    <li>{{ Product.category}}</li>
+                    <li>{{ Product.sub_category}}</li>
+                </ul>
+                
+                <button class="buy-button">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+      <!-- end  footer section -->
+      <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js">
+      </script>
+    
+</body>
+</html>
