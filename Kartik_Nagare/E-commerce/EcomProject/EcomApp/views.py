@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render , redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout , authenticate , login
-from . models import product
+from . models import product , cartItem
 
 # Create your views here.
 
@@ -13,12 +13,6 @@ def home(request):
 
 def about(request):
     return render(request,'about.html')
-
-def shop(request):
-    return render(request,'shop.html')
-
-def furniture(request):
-    return render(request ,'furniture.html')
 
 def contact(request):
     return render(request ,'contact.html')
@@ -60,10 +54,31 @@ def signin(request):
         return redirect('/auth')
     
 def log(request):
+    # logout function
     logout(request)
     return redirect('/')
 
-def single_product(request , id):
+def single_product(request , id ):
     product_data = product.objects.get(id = id)
-    return render(request , 'single_product.html' , {'Product' : product_data })
+    all_product = product.objects.all() 
+    return render(request , 'single_product.html' , {'Product' : product_data , 'all_product' : all_product})
+
+def cart(request):
+    cart_items = cartItem.objects.filter(user = request.user)
+    total_price = sum(item.product.price * item.quantity for item in cart_items)
+    return render(request , 'cart.html' , {'cart_items' : cart_items , 'total_price' : total_price})
+
+
+def add_to_cart(request , id):
+    Product = product.objects.get(id = id)
+    cart_item , created = cartItem.objects.get_or_create(product = Product , user = request.user)
+    cart_item.quantity += 1
+    cart_item.save()
+    return redirect('cart')
+
+def remove_from_cart(request, id):
+    cart_item = cartItem.objects.get(id=id)
+    cart_item.delete()
+    return redirect('cart')
+
 

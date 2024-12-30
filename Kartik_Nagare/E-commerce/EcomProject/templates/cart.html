@@ -1,0 +1,386 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,700&display=swap" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .cart-header {
+            margin-bottom: 2rem;
+        }
+
+        .cart-header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            position: relative;
+            display: inline-block;
+        }
+
+        .cart-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: #4CAF50;
+        }
+
+        .cart-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+
+        .cart-items {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto auto;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .item-title {
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .item-price {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .quantity-btn {
+            background: #f0f0f0;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .quantity {
+            font-size: 1.1rem;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .remove-btn {
+            color: #ff4444;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0.5rem;
+        }
+
+        .remove-btn:hover {
+            color: #cc0000;
+        }
+
+        .cart-summary {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            height: fit-content;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .summary-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #eee;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .checkout-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+
+        .checkout-btn:hover {
+            background: #45a049;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .continue-shopping {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 1.5rem;
+            display: block;
+        }
+
+        .continue-shopping:hover {
+            background: #444;
+        }
+
+        @media (max-width: 768px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-item {
+                grid-template-columns: auto 1fr;
+                grid-template-areas: 
+                    "image details"
+                    "image controls";
+                gap: 1rem;
+            }
+
+            .item-image {
+                grid-area: image;
+            }
+
+            .item-details {
+                grid-area: details;
+            }
+
+            .quantity-controls {
+                grid-area: controls;
+                justify-content: space-between;
+            }
+
+            .remove-btn {
+                margin-left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sub_page">
+        <div class="hero_area">
+        <!-- header section starts -->
+        <header class="header_section">
+          <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container">
+              <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" alt="" />
+              </a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+    
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item ">
+                      <a class="nav-link" href="{% url 'about' %}"> About</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'allproduct' %}"> Shop </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'contact' %}">Contact us</a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link" href="{% url 'cart' %}">Cart</a>
+                    </li>
+                  </ul>
+                <div class="user_option">
+                  {% if user.is_authenticated %}
+                    <a href="">
+                      <img src="{% static 'images/user.png' %}" alt="">
+                      <span>Logout</span>
+                    </a>
+                  {% else %}
+                    <a href="{% url 'auth' %}">
+                      <img src="{% static 'images/user.png' %}" alt="">
+                      <span>Login</span>
+                    </a>
+                  {% endif %}
+                  <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
+                    <button class="btn my-2 my-sm-0 nav_search-btn" type="submit"></button>
+                  </form>
+                </div>
+              <div>
+                <div class="custom_menu-btn">
+                  <button>
+                    <span class="s-1"></span>
+                    <span class="s-2"></span>
+                    <span class="s-3"></span>
+                  </button>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </header>
+        </div>
+      </div>
+    <div class="container">
+        <div class="cart-header">
+            <h1>Shopping Cart</h1>
+        </div>
+
+        <div class="cart-container">
+            {% for item in cart_items %}
+                <div class="cart-item">
+                    <img src="{{item.product.img.url}}" alt="Office Chair" class="item-image">
+                    <div class="item-details">
+                        
+                        <h3 class="item-title">{{item.product.name}}</h3>
+                        <p class="item-price">{{item.product.price}}</p>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn">-</button>
+                        <span class="quantity">{{item.quantity}}</span>
+                        <button class="quantity-btn">+</button>
+                    </div>
+                    <a class="remove-btn" , href = "{% url 'remove_from_cart' item.id %}", style="background-color : green">Remove </a>
+                </div>
+            {% endfor %}
+    
+
+            <div class="cart-summary">
+                <h2 class="summary-title">Order Summary</h2>
+                <div class="summary-item">
+                    <span>Subtotal</span>
+                    <span>{{total_price}}rs</span>
+                </div>
+                <div class="summary-item">
+                    <span>Shipping</span>
+                    <span>Free</span>
+                </div>
+                <div class="summary-item">
+                    <span>Tax</span>
+                    <span>449rs</span>
+                </div>
+                <div class="summary-total">
+                    <span>Total</span>
+                    <span>{{total_price}}rs</span>
+                </div>
+                <button class="checkout-btn">Proceed to Checkout</button>
+                <button class="continue-shopping" data-url="{% url 'allproduct' %}">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+    <section class="container-fluid footer_section ">
+        <div class="containers">
+          <p>
+            &copy; 2019 All Rights Reserved By
+            <a href="https://html.design/">Free Html Templates</a>
+          </p>
+        </div>
+    </section>
+    <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const continueShoppingButton = document.querySelector('.continue-shopping');
+            if (continueShoppingButton) {
+                continueShoppingButton.addEventListener('click', function() {
+                    const url = this.getAttribute('data-url'); // Get the URL from the data attribute
+                    window.location.href = url; // Redirect to the URL
+                });
+            }
+        });
+    </script>
+    
+</body>
+</html>

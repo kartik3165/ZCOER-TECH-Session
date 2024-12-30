@@ -49,17 +49,17 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'shop' %}">Shop</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'furniture' %}">Furniture</a>
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'about' %}"> About</a>
               </li>
               <li class="nav-item active">
+                <a class="nav-link" href="{% url 'allproduct' %}"> Shop </a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="{% url 'contact' %}">Contact us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'cart' %}">Cart</a>
               </li>
             </ul>
             <div class="user_option">
@@ -90,7 +90,6 @@
         </nav>
       </div>
     </header>
-    <!-- end header section -->
     </div>
   </div>  
   <section class="brand_section">
@@ -101,33 +100,32 @@
             </h2>
           </div>
           <div class="brand_container layout_padding2">
-            {% for product in Product %}
-        <div class="box">
-          <a href="single_product/{{product.id}}">
-            {% if product.offer == True %}
-            <div class="new">
-              <h5>
-                New
-              </h5>
-            </div>
-            {% endif %}
-            <div class="img-box">
-              <img src="{{ product.img.url }}" alt="">
-            </div>
-            <div class="detail-box">
-              <h6 class="price">
-                {{ product.price }}rs
-              </h6>
-              <h6>
-                {{ product.name}}
-              </h6>
-            </div>
-          </a>
-        </div>
-      {% endfor %}
-        
+               {% for product in Product %}
+                <div class="box">
+                  <a href="single_product/{{product.id}}">
+                    {% if product.offer == True %}
+                    <div class="new">
+                      <h5>
+                        New
+                      </h5>
+                    </div>
+                    {% endif %}
+                    <div class="img-box">
+                    <img src="{{ product.img.url }}" alt="">
+                    </div>
+                    <div class="detail-box">
+                      <h6 class="price">
+                        {{ product.price }}rs
+                      </h6>
+                      <h6>
+                        {{ product.name}}
+                      </h6>
+                    </div>
+                  </a>
+                </div>
+              {% endfor %}
+              </div>
           </div>
-        </div>
     </section>
 
     <section class="container-fluid footer_section ">
