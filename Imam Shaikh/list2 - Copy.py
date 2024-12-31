@@ -1,0 +1,11 @@
+mylist=["apple","Banana","Mango"]
+mylist.append("cherry")
+print(mylist)
+mylist.remove("Mango")
+print(mylist)
+mylist.insert(4,"brinjal")
+print(mylist)
+mylist.pop(3)
+print(mylist)
+mylist.pop()
+print(mylist)

@@ -1,0 +1,3 @@
+a = "Hello World!"
+b=a.isalnum()
+print(b)

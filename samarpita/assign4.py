@@ -1,9 +1,21 @@
+"""Problem 1: Library Management System
+
+Create a program to manage a small library's book collection. The program should:
+Store book details (title, author, year, availability status) in a dictionary.
+Implement functions to:
+Add new books.
+Update book availability when a book is borrowed or returned.
+Display all available books using a for loop.
+
+Use a while loop to continue accepting user input for various operations like adding or borrowing books.
+Provide an option to search for books by title or author."""
+
 library = { "book1 " : {"title" : "Limitless" , "author" : "Jim Kwik" ,"year" : 1960, "status" :"avail"},
            "book2 " : {"title" : "Death on the Nile" , "author" : "Agatha Christie" ,"year" : 1970,"status" :"avail"},
            "book3 " : {"title" : "Murder on the orient express" , "author" : "Agatha Christie" ,"year" : 1980, "status" :"avail"}
            }
 
-
+#add book
 def add_book():
         book_count = 3
         new_book = f"book{book_count+1}"
@@ -15,15 +27,19 @@ def add_book():
         book_count +=1
         print(library[new_book].items())
                
-
+#borrow or return book
 def borrow():
     which_book = input("enter the book name : ")
     for x,y in library.items() :
        title =  y.get("title")
        if which_book == title :
-           library[x].update({"status": "not avail"})
-           print(library[x].items())
-           
+           status = y.get("status")
+           if status == "avail" :           
+               library[x].update({"status": "not avail"})
+               print(library[x].items())
+           else :
+               print("book not available")
+               
 def return_book():
     which_book = input("enter the book name : ")
     for x,y in library.items() :
@@ -32,12 +48,12 @@ def return_book():
            library[x].update({"status": "avail"})
            print(library[x].items())
            
-
+# display books using for loop
 def display() :
     for x,y in library.items() :
         print(library[x].items())
         
-
+#search books
 def search_book():
     search_book = input("enter book name or author name : ")
     for x,y in library.items():
@@ -70,3 +86,4 @@ while flag :
         flag = 1
     else :
         flag = 0    
+    
