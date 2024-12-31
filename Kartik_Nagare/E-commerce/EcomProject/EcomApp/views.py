@@ -3,7 +3,15 @@ from django.http import HttpResponse
 from django.shortcuts import render , redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout , authenticate , login
-from . models import product , cartItem
+from . models import product , cartItem , Order , Category , Sub_category 
+from time import time
+from datetime import datetime
+
+def gen_order_id():
+    date_part = datetime.now().strftime("%d%m%y") 
+    time_part = str(int(time() * 1000))[-4:]       
+    return (date_part + time_part)
+
 
 # Create your views here.
 
@@ -80,5 +88,47 @@ def remove_from_cart(request, id):
     cart_item = cartItem.objects.get(id=id)
     cart_item.delete()
     return redirect('cart')
+
+def checkout(request):
+    item = cartItem.objects.filter(user = request.user)
+    total_price = sum(item.product.price * item.quantity for item in item)
+    return render(request , 'checkout.html' , {'item' : item , 'total_price' : total_price} )
+
+def order_now(request):
+    item = cartItem.objects.filter(user = request.user)
+    total_price = sum(item.product.price * item.quantity for item in item)
+    if request.method == 'POST':
+        full_name = request.POST['full_name']
+        mobile_number = request.POST['ph_no']
+        email = request.POST['email']
+        address = request.POST['address']
+        city = request.POST['city']
+        pay_mode = request.POST['mode']
+
+    order_id = gen_order_id()
+
+    for i in item:  
+        Order.objects.create(
+            user = request.user,
+            product = i.product ,
+            order_id = order_id,
+            address  = address ,
+            mobile_no = mobile_number ,
+            order_value = i.product.price * i.quantity
+        )
+    item.delete()
+    order_info = Order.objects.filter(user = request.user )
+    return render(request , 'checkout.html' , {'order_info' : order_info})
+
+def order_history(request):
+    order_info = Order.objects.filter(user = request.user )
+    return render(request , 'order_history.html' , {'order_info' : order_info})
+
+
+
+
+    
+
+        
 
 

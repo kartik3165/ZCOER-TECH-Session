@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone 
 from django.contrib.auth.models import User
+from datetime import datetime
 
 # Create your models here.
 
@@ -39,4 +40,18 @@ class cartItem(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.quantity} x {self.product.name}'
+        return f'{self.quantity} x {self.product.name} x {self.user}'
+    
+class Order(models.Model):
+    order_id = models.CharField(max_length=50)
+    user = models.ForeignKey(User , related_name='order' , on_delete=models.CASCADE)
+    product = models.ForeignKey(product , related_name='order_item' , on_delete=models.CASCADE)
+    address = models.CharField(max_length=200)
+    mobile_no = models.IntegerField()
+    date = models.DateTimeField(default=datetime.now())
+    STATUS_CH = [('pending','pending'),('delivered','delivered'),('on_the_Way','on_the_Way')]
+    status = models.CharField(max_length=100 , choices=STATUS_CH , default='pending')
+    order_value = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.order_id} {self.user} {self.product}'

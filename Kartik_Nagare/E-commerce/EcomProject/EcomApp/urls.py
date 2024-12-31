@@ -13,5 +13,8 @@ urlpatterns = [
     path('single_product/<int:id>', views.single_product , name = "single_product"),
     path('cart', views.cart , name = "cart"),
     path('add/<int:id>/', views.add_to_cart , name = 'add_to_cart'),
-    path('remove/<int:id>/' , views.remove_from_cart , name= 'remove_from_cart')
+    path('remove/<int:id>/' , views.remove_from_cart , name= 'remove_from_cart'),
+    path('checkout' , views.checkout , name= 'checkout'),
+    path('placed_order' , views.order_now , name='order-now'),
+    path('order_history' , views.order_history , name='order_history')
 ]
